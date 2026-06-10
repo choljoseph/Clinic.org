@@ -1,0 +1,1299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HealthFirst Clinic — Your Health, Our Priority</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal-deep:   #0B4F5C;
+    --teal-mid:    #1A7A8A;
+    --teal-light:  #D6EEF2;
+    --sage:        #7FB89A;
+    --gold:        #C8974A;
+    --ivory:       #F7F5F0;
+    --charcoal:    #1C2527;
+    --slate:       #5A6E73;
+    --white:       #FFFFFF;
+    --red-em:      #C0392B;
+
+    --ff-display: 'DM Serif Display', Georgia, serif;
+    --ff-body:    'Inter', system-ui, sans-serif;
+    --ff-mono:    'DM Mono', monospace;
+
+    --radius: 4px;
+    --radius-lg: 10px;
+    --shadow: 0 2px 16px rgba(11,79,92,0.10);
+    --shadow-lg: 0 8px 40px rgba(11,79,92,0.15);
+    --transition: .22s ease;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--ff-body);
+    background: var(--white);
+    color: var(--charcoal);
+    font-size: 16px;
+    line-height: 1.65;
+  }
+
+  /* ── Utility ── */
+  .container { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
+  .section { padding: 80px 0; }
+  .section--alt { background: var(--ivory); }
+  .section--dark { background: var(--teal-deep); color: var(--white); }
+  .tag { font-family: var(--ff-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); }
+  .section-head { margin-bottom: 48px; }
+  .section-head h2 { font-family: var(--ff-display); font-size: clamp(28px, 4vw, 40px); line-height: 1.2; margin-top: 8px; }
+  .section-head p { color: var(--slate); max-width: 560px; margin-top: 12px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 26px; border-radius: var(--radius);
+    font-family: var(--ff-body); font-size: 14px; font-weight: 600;
+    text-decoration: none; cursor: pointer; border: none;
+    transition: background var(--transition), color var(--transition), transform var(--transition);
+  }
+  .btn:hover { transform: translateY(-1px); }
+  .btn-primary { background: var(--teal-mid); color: var(--white); }
+  .btn-primary:hover { background: var(--teal-deep); }
+  .btn-outline { background: transparent; color: var(--teal-mid); border: 1.5px solid var(--teal-mid); }
+  .btn-outline:hover { background: var(--teal-light); }
+  .btn-gold { background: var(--gold); color: var(--white); }
+  .btn-gold:hover { background: #a97a35; }
+  .btn-white { background: var(--white); color: var(--teal-deep); }
+  .btn-white:hover { background: var(--teal-light); }
+
+  /* ── Top Bar ── */
+  .topbar {
+    background: var(--teal-deep);
+    color: rgba(255,255,255,.75);
+    font-size: 13px;
+    padding: 8px 0;
+  }
+  .topbar .container { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+  .topbar a { color: rgba(255,255,255,.85); text-decoration: none; }
+  .topbar a:hover { color: var(--white); }
+  .topbar-left, .topbar-right { display: flex; gap: 20px; align-items: center; }
+  .topbar-em { background: var(--red-em); color: var(--white); padding: 2px 10px; border-radius: 2px; font-weight: 600; font-size: 12px; }
+
+  /* ── Nav ── */
+  nav {
+    background: var(--white);
+    position: sticky; top: 0; z-index: 1000;
+    box-shadow: 0 1px 0 rgba(11,79,92,.12);
+  }
+  .nav-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 24px; max-width: 1140px; margin: 0 auto; height: 68px;
+  }
+  .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .logo-mark {
+    width: 38px; height: 38px; background: var(--teal-mid);
+    border-radius: 8px; display: flex; align-items: center; justify-content: center;
+  }
+  .logo-mark svg { width: 22px; height: 22px; fill: none; stroke: white; stroke-width: 2; stroke-linecap: round; }
+  .logo-text { font-family: var(--ff-display); font-size: 20px; color: var(--teal-deep); }
+  .logo-text span { color: var(--gold); }
+
+  .nav-links { display: flex; align-items: center; gap: 4px; list-style: none; }
+  .nav-links > li { position: relative; }
+  .nav-links > li > a {
+    display: block; padding: 8px 14px; font-size: 14px; font-weight: 500;
+    color: var(--charcoal); text-decoration: none; border-radius: var(--radius);
+    transition: background var(--transition), color var(--transition);
+  }
+  .nav-links > li > a:hover, .nav-links > li > a.active { color: var(--teal-mid); background: var(--teal-light); }
+  .nav-links > li:hover .dropdown { opacity: 1; pointer-events: all; transform: translateY(0); }
+  .dropdown {
+    position: absolute; top: calc(100% + 8px); left: 0;
+    background: var(--white); border: 1px solid rgba(11,79,92,.1);
+    border-radius: var(--radius-lg); box-shadow: var(--shadow-lg);
+    min-width: 200px; padding: 8px 0; list-style: none;
+    opacity: 0; pointer-events: none;
+    transform: translateY(8px); transition: all var(--transition);
+  }
+  .dropdown li a {
+    display: block; padding: 10px 18px; font-size: 13.5px;
+    color: var(--charcoal); text-decoration: none;
+    transition: background var(--transition), color var(--transition);
+  }
+  .dropdown li a:hover { background: var(--teal-light); color: var(--teal-deep); }
+  .nav-cta { display: flex; gap: 10px; align-items: center; }
+  .hamburger { display: none; background: none; border: none; cursor: pointer; padding: 6px; }
+  .hamburger span { display: block; width: 22px; height: 2px; background: var(--charcoal); margin: 5px 0; transition: all .2s; border-radius: 2px; }
+
+  /* ── Hero ── */
+  .hero {
+    background: linear-gradient(135deg, var(--teal-deep) 0%, #0e6374 60%, #176878 100%);
+    color: var(--white);
+    padding: 100px 0 80px;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; right: -120px; top: -80px;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.04);
+  }
+  .hero::after {
+    content: '';
+    position: absolute; right: 80px; bottom: -200px;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: rgba(200,151,74,.08);
+  }
+  .hero-inner { display: grid; grid-template-columns: 1fr 420px; gap: 60px; align-items: center; position: relative; z-index: 1; }
+  .hero-eyebrow { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+  .hero-eyebrow .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--sage); }
+  .hero-eyebrow span { font-family: var(--ff-mono); font-size: 12px; letter-spacing: .1em; color: rgba(255,255,255,.7); text-transform: uppercase; }
+  .hero h1 {
+    font-family: var(--ff-display);
+    font-size: clamp(36px, 5vw, 58px);
+    line-height: 1.15; margin-bottom: 20px;
+  }
+  .hero h1 em { font-style: italic; color: var(--sage); }
+  .hero-desc { font-size: 17px; color: rgba(255,255,255,.75); line-height: 1.7; max-width: 500px; margin-bottom: 36px; }
+  .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+  .hero-stats { display: flex; gap: 32px; margin-top: 48px; padding-top: 32px; border-top: 1px solid rgba(255,255,255,.12); }
+  .stat-num { font-family: var(--ff-display); font-size: 32px; color: var(--white); }
+  .stat-label { font-size: 12px; color: rgba(255,255,255,.6); margin-top: 2px; }
+  .hero-card {
+    background: rgba(255,255,255,.07);
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 16px; padding: 28px;
+    backdrop-filter: blur(10px);
+  }
+  .hero-card h3 { font-family: var(--ff-display); font-size: 20px; margin-bottom: 20px; }
+  .quick-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .quick-links li a {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 14px; background: rgba(255,255,255,.07);
+    border-radius: var(--radius); text-decoration: none; color: var(--white);
+    font-size: 14px; font-weight: 500; transition: background var(--transition);
+  }
+  .quick-links li a:hover { background: rgba(255,255,255,.14); }
+  .quick-links .ql-icon {
+    width: 32px; height: 32px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; flex-shrink: 0;
+  }
+
+  /* ── Notice Banner ── */
+  .notice {
+    background: var(--gold);
+    padding: 14px 0;
+    text-align: center;
+  }
+  .notice p { font-size: 13.5px; font-weight: 500; color: var(--white); }
+  .notice a { color: var(--white); font-weight: 700; text-decoration: underline; }
+
+  /* ── Services ── */
+  .services-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; }
+  .service-card {
+    background: var(--white);
+    border: 1px solid rgba(11,79,92,.1);
+    border-radius: var(--radius-lg); padding: 28px;
+    transition: box-shadow var(--transition), transform var(--transition);
+    cursor: default;
+  }
+  .service-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-3px); }
+  .svc-icon {
+    width: 52px; height: 52px; border-radius: 12px;
+    background: var(--teal-light); display: flex; align-items: center;
+    justify-content: center; font-size: 24px; margin-bottom: 18px;
+  }
+  .service-card h3 { font-size: 17px; font-weight: 600; margin-bottom: 10px; }
+  .service-card p { font-size: 14px; color: var(--slate); line-height: 1.6; }
+  .svc-link { display: inline-block; margin-top: 14px; font-size: 13px; font-weight: 600; color: var(--teal-mid); text-decoration: none; }
+  .svc-link:hover { color: var(--teal-deep); }
+
+  /* ── About ── */
+  .about-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+  .about-img-wrap { position: relative; }
+  .about-img {
+    width: 100%; aspect-ratio: 4/3; object-fit: cover;
+    border-radius: var(--radius-lg);
+    background: linear-gradient(135deg, var(--teal-light), var(--sage));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 80px; color: var(--teal-mid);
+  }
+  .about-badge {
+    position: absolute; bottom: -20px; right: -20px;
+    background: var(--white); border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg); padding: 18px 22px;
+    text-align: center; border: 1px solid rgba(11,79,92,.08);
+  }
+  .about-badge .num { font-family: var(--ff-display); font-size: 36px; color: var(--teal-deep); line-height: 1; }
+  .about-badge .lbl { font-size: 12px; color: var(--slate); margin-top: 4px; }
+  .about-pillars { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 28px; }
+  .pillar { padding: 16px; background: var(--teal-light); border-radius: var(--radius); }
+  .pillar h4 { font-size: 14px; font-weight: 600; color: var(--teal-deep); margin-bottom: 4px; }
+  .pillar p { font-size: 13px; color: var(--slate); }
+
+  /* ── Team ── */
+  .team-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 28px; }
+  .doctor-card {
+    background: var(--white); border-radius: var(--radius-lg);
+    border: 1px solid rgba(11,79,92,.1); overflow: hidden;
+    transition: box-shadow var(--transition), transform var(--transition);
+  }
+  .doctor-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-3px); }
+  .doctor-photo {
+    width: 100%; aspect-ratio: 1; object-fit: cover;
+    background: linear-gradient(160deg, var(--teal-light) 0%, #b8d8de 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 64px;
+  }
+  .doctor-info { padding: 20px; }
+  .doctor-info h3 { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+  .doctor-spec { font-size: 13px; color: var(--teal-mid); font-weight: 500; margin-bottom: 8px; }
+  .doctor-bio { font-size: 13px; color: var(--slate); line-height: 1.5; }
+  .doctor-actions { display: flex; gap: 8px; margin-top: 14px; }
+  .doctor-actions a { flex: 1; text-align: center; font-size: 12px; padding: 8px; }
+
+  /* ── Appointment ── */
+  .appt-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+  .appt-form { background: var(--white); border-radius: var(--radius-lg); padding: 36px; box-shadow: var(--shadow); }
+  .appt-form h3 { font-family: var(--ff-display); font-size: 24px; margin-bottom: 24px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-group { margin-bottom: 18px; }
+  .form-group label { display: block; font-size: 13px; font-weight: 600; color: var(--charcoal); margin-bottom: 6px; }
+  .form-group input, .form-group select, .form-group textarea {
+    width: 100%; padding: 11px 14px;
+    border: 1.5px solid rgba(11,79,92,.18); border-radius: var(--radius);
+    font-family: var(--ff-body); font-size: 14px; color: var(--charcoal);
+    background: var(--white); transition: border-color var(--transition);
+  }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    outline: none; border-color: var(--teal-mid);
+  }
+  .form-group textarea { resize: vertical; min-height: 90px; }
+  .appt-info { color: var(--white); }
+  .appt-info h3 { font-family: var(--ff-display); font-size: 28px; margin-bottom: 16px; }
+  .appt-info p { color: rgba(255,255,255,.75); margin-bottom: 28px; }
+  .hours-list { list-style: none; }
+  .hours-list li {
+    display: flex; justify-content: space-between;
+    padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,.1);
+    font-size: 14px;
+  }
+  .hours-list li span:last-child { font-weight: 600; }
+  .hours-list li.today { color: var(--sage); font-weight: 600; }
+
+  /* ── Blog ── */
+  .blog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 28px; }
+  .blog-card {
+    background: var(--white); border-radius: var(--radius-lg);
+    border: 1px solid rgba(11,79,92,.08); overflow: hidden;
+    transition: box-shadow var(--transition);
+  }
+  .blog-card:hover { box-shadow: var(--shadow-lg); }
+  .blog-thumb {
+    height: 180px; display: flex; align-items: center; justify-content: center;
+    font-size: 56px;
+  }
+  .blog-thumb.t1 { background: linear-gradient(135deg, #d6eef2, #7fb89a30); }
+  .blog-thumb.t2 { background: linear-gradient(135deg, #fef3e2, #c8974a30); }
+  .blog-thumb.t3 { background: linear-gradient(135deg, #ffe9e9, #c0392b20); }
+  .blog-body { padding: 22px; }
+  .blog-cat { font-family: var(--ff-mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--teal-mid); margin-bottom: 8px; }
+  .blog-body h3 { font-size: 16px; font-weight: 600; line-height: 1.4; margin-bottom: 10px; }
+  .blog-body p { font-size: 13.5px; color: var(--slate); }
+  .blog-meta { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; font-size: 12px; color: var(--slate); }
+  .blog-meta a { color: var(--teal-mid); text-decoration: none; font-weight: 600; }
+
+  /* ── Gallery ── */
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: auto auto;
+    gap: 12px;
+  }
+  .gallery-item {
+    border-radius: var(--radius); overflow: hidden; position: relative;
+    aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
+    font-size: 48px; cursor: pointer;
+    transition: transform var(--transition);
+  }
+  .gallery-item:hover { transform: scale(1.02); }
+  .gallery-item:hover .gallery-overlay { opacity: 1; }
+  .gallery-item:nth-child(1) { grid-column: span 2; grid-row: span 2; aspect-ratio: auto; min-height: 300px; }
+  .gallery-overlay {
+    position: absolute; inset: 0; background: rgba(11,79,92,.5);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity var(--transition);
+  }
+  .gallery-overlay span { color: white; font-size: 12px; font-weight: 600; font-family: var(--ff-mono); letter-spacing: .08em; }
+  .g1 { background: linear-gradient(135deg, #c4dde3, #7fb89a40); }
+  .g2 { background: linear-gradient(135deg, #d6eef2, #0b4f5c20); }
+  .g3 { background: linear-gradient(135deg, #e8f5e9, #7fb89a50); }
+  .g4 { background: linear-gradient(135deg, #fff3e0, #c8974a30); }
+  .g5 { background: linear-gradient(135deg, #e3f2fd, #1a7a8a30); }
+  .g6 { background: linear-gradient(135deg, #fce4ec, #e91e6320); }
+  .g7 { background: linear-gradient(135deg, #f3e5f5, #9c27b020); }
+
+  /* ── Contact ── */
+  .contact-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
+  .contact-info h3 { font-family: var(--ff-display); font-size: 28px; margin-bottom: 16px; }
+  .contact-info p { color: var(--slate); margin-bottom: 28px; }
+  .contact-item { display: flex; gap: 16px; margin-bottom: 22px; }
+  .contact-icon { width: 44px; height: 44px; border-radius: 10px; background: var(--teal-light); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+  .contact-item h4 { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+  .contact-item p { font-size: 13.5px; color: var(--slate); margin: 0; }
+  .contact-item a { color: var(--teal-mid); text-decoration: none; }
+  .map-placeholder {
+    background: var(--teal-light); border-radius: var(--radius-lg);
+    height: 260px; display: flex; align-items: center;
+    justify-content: center; flex-direction: column; gap: 12px;
+    margin-bottom: 24px; font-size: 48px; border: 1px solid rgba(11,79,92,.1);
+  }
+  .map-placeholder p { font-size: 14px; color: var(--slate); margin: 0; }
+  .em-contacts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .em-card {
+    background: var(--red-em); color: var(--white);
+    border-radius: var(--radius); padding: 14px;
+    text-align: center;
+  }
+  .em-card h4 { font-size: 12px; font-family: var(--ff-mono); letter-spacing: .08em; margin-bottom: 4px; opacity: .8; }
+  .em-card .em-num { font-family: var(--ff-display); font-size: 22px; }
+
+  /* ── Patient Portal ── */
+  .portal-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+  .portal-features { list-style: none; }
+  .portal-features li {
+    display: flex; gap: 14px; align-items: flex-start;
+    padding: 14px 0; border-bottom: 1px solid rgba(11,79,92,.1);
+  }
+  .portal-features li:last-child { border-bottom: none; }
+  .pf-icon { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
+  .pf-text h4 { font-size: 15px; font-weight: 600; margin-bottom: 3px; }
+  .pf-text p { font-size: 13px; color: var(--slate); }
+  .portal-login { background: var(--teal-deep); border-radius: var(--radius-lg); padding: 40px; }
+  .portal-login h3 { font-family: var(--ff-display); font-size: 24px; color: var(--white); margin-bottom: 24px; }
+  .portal-login .form-group label { color: rgba(255,255,255,.75); }
+  .portal-login input {
+    background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.2);
+    color: var(--white);
+  }
+  .portal-login input::placeholder { color: rgba(255,255,255,.4); }
+  .portal-login input:focus { border-color: var(--sage); }
+  .portal-divider { text-align: center; color: rgba(255,255,255,.4); font-size: 13px; margin: 16px 0; }
+
+  /* ── Careers ── */
+  .careers-intro { max-width: 640px; margin-bottom: 48px; }
+  .jobs-list { display: flex; flex-direction: column; gap: 16px; }
+  .job-card {
+    background: var(--white); border: 1px solid rgba(11,79,92,.1);
+    border-radius: var(--radius-lg); padding: 22px 26px;
+    display: flex; align-items: center; gap: 20px;
+    transition: box-shadow var(--transition);
+  }
+  .job-card:hover { box-shadow: var(--shadow); }
+  .job-icon { width: 48px; height: 48px; background: var(--teal-light); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+  .job-info { flex: 1; }
+  .job-info h3 { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+  .job-meta { display: flex; gap: 14px; font-size: 12.5px; color: var(--slate); }
+  .job-badge { display: inline-block; padding: 2px 8px; background: var(--teal-light); border-radius: 3px; font-size: 11px; font-weight: 600; color: var(--teal-deep); }
+
+  /* ── Footer ── */
+  footer { background: #0a1c20; color: rgba(255,255,255,.65); }
+  .footer-top { padding: 60px 0 40px; }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1.2fr; gap: 40px; }
+  .footer-brand .logo-text { color: var(--white); }
+  .footer-brand .logo-mark { background: var(--teal-mid); }
+  .footer-brand p { font-size: 13.5px; margin-top: 14px; line-height: 1.6; max-width: 260px; }
+  .footer-socials { display: flex; gap: 10px; margin-top: 20px; }
+  .social-btn {
+    width: 36px; height: 36px; border-radius: 6px;
+    background: rgba(255,255,255,.07); display: flex;
+    align-items: center; justify-content: center;
+    font-size: 16px; text-decoration: none;
+    transition: background var(--transition);
+  }
+  .social-btn:hover { background: var(--teal-mid); }
+  .footer-col h4 { font-size: 13px; font-weight: 700; color: var(--white); letter-spacing: .04em; text-transform: uppercase; margin-bottom: 16px; }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: 9px; }
+  .footer-col ul li a { font-size: 13.5px; color: rgba(255,255,255,.6); text-decoration: none; transition: color var(--transition); }
+  .footer-col ul li a:hover { color: var(--white); }
+  .footer-contact-item { display: flex; gap: 10px; font-size: 13px; margin-bottom: 10px; }
+  .footer-contact-item span:first-child { opacity: .7; }
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,.07);
+    padding: 20px 0; display: flex; justify-content: space-between;
+    align-items: center; font-size: 12.5px;
+    flex-wrap: wrap; gap: 10px;
+  }
+  .footer-bottom a { color: rgba(255,255,255,.5); text-decoration: none; }
+  .footer-bottom a:hover { color: var(--white); }
+  .footer-links { display: flex; gap: 20px; }
+  .accred { display: flex; align-items: center; gap: 8px; }
+  .accred-badge {
+    padding: 4px 10px; border-radius: 3px;
+    background: rgba(255,255,255,.07);
+    font-family: var(--ff-mono); font-size: 10.5px;
+    color: rgba(255,255,255,.5); letter-spacing: .06em;
+  }
+
+  /* ── Back to top ── */
+  #back-top {
+    position: fixed; bottom: 24px; right: 24px;
+    width: 44px; height: 44px; border-radius: 50%;
+    background: var(--teal-deep); color: var(--white);
+    border: none; cursor: pointer; font-size: 18px;
+    box-shadow: var(--shadow-lg);
+    display: flex; align-items: center; justify-content: center;
+    transition: opacity var(--transition), transform var(--transition);
+    opacity: 0; pointer-events: none;
+  }
+  #back-top.visible { opacity: 1; pointer-events: all; }
+  #back-top:hover { transform: translateY(-3px); }
+
+  /* ── Mobile ── */
+  @media (max-width: 900px) {
+    .hero-inner, .about-inner, .appt-inner, .contact-inner, .portal-inner { grid-template-columns: 1fr; }
+    .hero-card { display: none; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    .gallery-item:nth-child(1) { grid-column: span 1; grid-row: span 1; }
+    .about-badge { right: 0; }
+    .nav-links, .nav-cta { display: none; }
+    .hamburger { display: block; }
+    .nav-links.open { display: flex; flex-direction: column; position: absolute; top: 68px; left: 0; right: 0; background: var(--white); padding: 16px; box-shadow: var(--shadow-lg); }
+    .nav-links.open .dropdown { position: static; opacity: 1; transform: none; box-shadow: none; border: none; background: var(--ivory); margin-top: 4px; }
+    .form-row { grid-template-columns: 1fr; }
+    .em-contacts { grid-template-columns: 1fr 1fr; }
+    .appt-info { padding: 0; }
+  }
+  @media (max-width: 600px) {
+    .footer-grid { grid-template-columns: 1fr; }
+    .topbar-left { display: none; }
+    .hero-stats { flex-wrap: wrap; gap: 20px; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Top Bar -->
+<div class="topbar">
+  <div class="container">
+    <div class="topbar-left">
+      <a href="tel:+211912345678">📞 +211 912 345 678</a>
+      <a href="mailto:info@healthfirstclinic.ss">✉ info@healthfirstclinic.ss</a>
+      <span>📍 Hai Cinema, Juba, South Sudan</span>
+    </div>
+    <div class="topbar-right">
+      <span class="topbar-em">🚨 Emergency: 911</span>
+      <a href="#portal">Patient Portal</a>
+      <a href="#careers">Careers</a>
+    </div>
+  </div>
+</div>
+
+<!-- Navigation -->
+<nav id="main-nav">
+  <div class="nav-inner">
+    <a href="#home" class="logo">
+      <div class="logo-mark">
+        <svg viewBox="0 0 24 24"><path d="M12 2L12 22M2 12L22 12" stroke-width="2.5"/></svg>
+      </div>
+      <span class="logo-text">Health<span>First</span></span>
+    </a>
+
+    <ul class="nav-links" id="nav-links">
+      <li><a href="#home" class="active">Home</a></li>
+      <li>
+        <a href="#about">About Us ▾</a>
+        <ul class="dropdown">
+          <li><a href="#about">Our Story</a></li>
+          <li><a href="#about">Mission &amp; Vision</a></li>
+          <li><a href="#team">Management Team</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#services">Services ▾</a>
+        <ul class="dropdown">
+          <li><a href="#services">General Consultation</a></li>
+          <li><a href="#services">Laboratory Services</a></li>
+          <li><a href="#services">Pharmacy</a></li>
+          <li><a href="#services">Maternal &amp; Child Health</a></li>
+          <li><a href="#services">Vaccination</a></li>
+          <li><a href="#services">Emergency Care</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#team">Doctors ▾</a>
+        <ul class="dropdown">
+          <li><a href="#team">Doctor Profiles</a></li>
+          <li><a href="#team">Specializations</a></li>
+        </ul>
+      </li>
+      <li><a href="#appointments">Appointments</a></li>
+      <li><a href="#portal">Patient Portal</a></li>
+      <li>
+        <a href="#blog">Blog ▾</a>
+        <ul class="dropdown">
+          <li><a href="#blog">Health Tips</a></li>
+          <li><a href="#blog">Disease Awareness</a></li>
+          <li><a href="#blog">News &amp; Updates</a></li>
+        </ul>
+      </li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+
+    <div class="nav-cta">
+      <a href="#portal" class="btn btn-outline" style="font-size:13px; padding:9px 18px;">Patient Portal</a>
+      <a href="#appointments" class="btn btn-primary" style="font-size:13px; padding:9px 18px;">Book Appointment</a>
+    </div>
+
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Notice -->
+<div class="notice">
+  <p>🔔 New: COVID-19 booster vaccines now available. <a href="#services">Learn more →</a></p>
+</div>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero" id="home">
+  <div class="container">
+    <div class="hero-inner">
+      <div class="hero-content">
+        <div class="hero-eyebrow">
+          <div class="dot"></div>
+          <span>Accredited Healthcare — Juba, South Sudan</span>
+        </div>
+        <h1>Your health is our <em>deepest</em> commitment</h1>
+        <p class="hero-desc">HealthFirst Clinic provides compassionate, expert-led healthcare to every patient — from routine consultations to emergency care — delivered with dignity and modern medicine.</p>
+        <div class="hero-actions">
+          <a href="#appointments" class="btn btn-gold">Book an Appointment</a>
+          <a href="#services" class="btn btn-white">Explore Services</a>
+        </div>
+        <div class="hero-stats">
+          <div>
+            <div class="stat-num">12+</div>
+            <div class="stat-label">Years serving Juba</div>
+          </div>
+          <div>
+            <div class="stat-num">35k</div>
+            <div class="stat-label">Patients treated</div>
+          </div>
+          <div>
+            <div class="stat-num">18</div>
+            <div class="stat-label">Specialist doctors</div>
+          </div>
+          <div>
+            <div class="stat-num">24/7</div>
+            <div class="stat-label">Emergency care</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-card">
+        <h3>Quick Access</h3>
+        <ul class="quick-links">
+          <li>
+            <a href="#appointments">
+              <div class="ql-icon" style="background:rgba(127,184,154,.2)">📅</div>
+              Book Appointment
+            </a>
+          </li>
+          <li>
+            <a href="#portal">
+              <div class="ql-icon" style="background:rgba(200,151,74,.2)">🔐</div>
+              Patient Portal Login
+            </a>
+          </li>
+          <li>
+            <a href="#services">
+              <div class="ql-icon" style="background:rgba(255,255,255,.1)">🩺</div>
+              Find a Doctor
+            </a>
+          </li>
+          <li>
+            <a href="#services">
+              <div class="ql-icon" style="background:rgba(192,57,43,.2)">🚑</div>
+              Emergency Care
+            </a>
+          </li>
+          <li>
+            <a href="#contact">
+              <div class="ql-icon" style="background:rgba(127,184,154,.2)">📍</div>
+              Get Directions
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SERVICES ═══ -->
+<section class="section" id="services">
+  <div class="container">
+    <div class="section-head">
+      <span class="tag">What We Offer</span>
+      <h2>Comprehensive clinical services</h2>
+      <p>From preventive care to advanced diagnostics, our team is equipped to handle your health needs under one roof.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="svc-icon">🩺</div>
+        <h3>General Consultation</h3>
+        <p>See an experienced general practitioner for diagnosis, treatment plans, referrals, and routine health check-ups.</p>
+        <a href="#appointments" class="svc-link">Book consultation →</a>
+      </div>
+      <div class="service-card">
+        <div class="svc-icon">🔬</div>
+        <h3>Laboratory Services</h3>
+        <p>On-site laboratory offering blood panels, urinalysis, malaria tests, HIV screening, and culture results in hours.</p>
+        <a href="#appointments" class="svc-link">Request a test →</a>
+      </div>
+      <div class="service-card">
+        <div class="svc-icon">💊</div>
+        <h3>Pharmacy</h3>
+        <p>Stocked in-clinic pharmacy dispensing prescribed and over-the-counter medications, with qualified pharmacists on duty.</p>
+        <a href="#contact" class="svc-link">Check availability →</a>
+      </div>
+      <div class="service-card">
+        <div class="svc-icon">🤱</div>
+        <h3>Maternal &amp; Child Health</h3>
+        <p>Antenatal and postnatal care, safe deliveries, childhood immunisations, growth monitoring, and nutrition support.</p>
+        <a href="#appointments" class="svc-link">Schedule visit →</a>
+      </div>
+      <div class="service-card">
+        <div class="svc-icon">💉</div>
+        <h3>Vaccination</h3>
+        <p>Full vaccination schedule for infants, children, and adults including COVID-19, Yellow Fever, Typhoid, and Hepatitis B.</p>
+        <a href="#appointments" class="svc-link">View schedule →</a>
+      </div>
+      <div class="service-card" style="border-color: var(--red-em); background: #fff8f8;">
+        <div class="svc-icon" style="background:#fde8e8;">🚑</div>
+        <h3>Emergency Care</h3>
+        <p>24-hour emergency unit staffed around the clock. Call <strong style="color:var(--red-em)">911</strong> or walk in — we triage and treat without delay.</p>
+        <a href="tel:911" class="svc-link" style="color:var(--red-em);">Call emergency →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ABOUT ═══ -->
+<section class="section section--alt" id="about">
+  <div class="container">
+    <div class="about-inner">
+      <div class="about-img-wrap">
+        <div class="about-img">🏥</div>
+        <div class="about-badge">
+          <div class="num">2012</div>
+          <div class="lbl">Founded in Juba</div>
+        </div>
+      </div>
+      <div>
+        <span class="tag">Our Story</span>
+        <h2 style="font-family:var(--ff-display); font-size: clamp(28px,4vw,40px); line-height:1.2; margin-top:8px;">Built on trust, guided by compassion</h2>
+        <p style="color:var(--slate); margin: 16px 0 12px;">HealthFirst Clinic opened its doors in Juba in 2012 with one goal: make quality healthcare genuinely accessible to every South Sudanese family, regardless of means or background.</p>
+        <p style="color:var(--slate); margin-bottom: 24px;">Over twelve years we have grown from a four-room consultation centre to a full-service facility with an in-patient ward, modern laboratory, 24-hour emergency unit, and a team of 18 specialist physicians.</p>
+
+        <div style="background:var(--teal-light); border-left:3px solid var(--teal-mid); padding:16px 20px; border-radius: 0 var(--radius) var(--radius) 0; margin-bottom:24px;">
+          <p style="font-style:italic; color:var(--teal-deep); margin:0; font-size:15px;">"Our mission is to deliver patient-centred care that restores health and rebuilds lives — with skill, empathy, and respect for every person who walks through our doors."</p>
+        </div>
+
+        <div class="about-pillars">
+          <div class="pillar">
+            <h4>🎯 Mission</h4>
+            <p>Accessible, affordable, and high-quality healthcare for all communities in South Sudan.</p>
+          </div>
+          <div class="pillar">
+            <h4>🌟 Vision</h4>
+            <p>A healthier South Sudan where no one is denied care due to geography or poverty.</p>
+          </div>
+          <div class="pillar">
+            <h4>🤝 Values</h4>
+            <p>Integrity, compassion, excellence, and community partnership drive every decision.</p>
+          </div>
+          <div class="pillar">
+            <h4>🏅 Accreditation</h4>
+            <p>Licensed by the South Sudan Ministry of Health; WHO-aligned clinical protocols.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ DOCTORS ═══ -->
+<section class="section" id="team">
+  <div class="container">
+    <div class="section-head">
+      <span class="tag">Our Physicians</span>
+      <h2>Meet the doctors behind your care</h2>
+      <p>A dedicated team of specialists committed to evidence-based medicine and compassionate patient relationships.</p>
+    </div>
+    <div class="team-grid">
+      <div class="doctor-card">
+        <div class="doctor-photo">👨‍⚕️</div>
+        <div class="doctor-info">
+          <h3>Dr. James Akol</h3>
+          <div class="doctor-spec">General &amp; Family Medicine</div>
+          <p class="doctor-bio">MBBS (Makerere), 14 years experience. Specialises in chronic disease management and community health.</p>
+          <div class="doctor-actions">
+            <a href="#appointments" class="btn btn-primary" style="font-size:12px; padding:8px 12px;">Book</a>
+            <a href="#team" class="btn btn-outline" style="font-size:12px; padding:8px 12px;">Profile</a>
+          </div>
+        </div>
+      </div>
+      <div class="doctor-card">
+        <div class="doctor-photo">👩‍⚕️</div>
+        <div class="doctor-info">
+          <h3>Dr. Grace Amara</h3>
+          <div class="doctor-spec">Obstetrics &amp; Gynaecology</div>
+          <p class="doctor-bio">MD (Kampala), Fellowship in Maternal-Fetal Medicine. Leads our MCH unit with over 2,000 safe deliveries.</p>
+          <div class="doctor-actions">
+            <a href="#appointments" class="btn btn-primary" style="font-size:12px; padding:8px 12px;">Book</a>
+            <a href="#team" class="btn btn-outline" style="font-size:12px; padding:8px 12px;">Profile</a>
+          </div>
+        </div>
+      </div>
+      <div class="doctor-card">
+        <div class="doctor-photo">👨‍⚕️</div>
+        <div class="doctor-info">
+          <h3>Dr. Peter Lado</h3>
+          <div class="doctor-spec">Paediatrics</div>
+          <p class="doctor-bio">MBChB, Diploma in Child Health. Expert in neonatal care and childhood infectious diseases including malaria.</p>
+          <div class="doctor-actions">
+            <a href="#appointments" class="btn btn-primary" style="font-size:12px; padding:8px 12px;">Book</a>
+            <a href="#team" class="btn btn-outline" style="font-size:12px; padding:8px 12px;">Profile</a>
+          </div>
+        </div>
+      </div>
+      <div class="doctor-card">
+        <div class="doctor-photo">👩‍⚕️</div>
+        <div class="doctor-info">
+          <h3>Dr. Mary Deng</h3>
+          <div class="doctor-spec">Internal Medicine</div>
+          <p class="doctor-bio">MBBS (Nairobi), MSc Infectious Disease. Specialises in HIV/AIDS management, TB, and tropical medicine.</p>
+          <div class="doctor-actions">
+            <a href="#appointments" class="btn btn-primary" style="font-size:12px; padding:8px 12px;">Book</a>
+            <a href="#team" class="btn btn-outline" style="font-size:12px; padding:8px 12px;">Profile</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top:36px;">
+      <a href="#team" class="btn btn-outline">View all 18 doctors →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ APPOINTMENTS ═══ -->
+<section class="section section--dark" id="appointments">
+  <div class="container">
+    <div class="appt-inner">
+      <div class="appt-form">
+        <h3>Book an Appointment</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label>First Name</label>
+            <input type="text" placeholder="Akol">
+          </div>
+          <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" placeholder="Deng">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Phone Number</label>
+            <input type="tel" placeholder="+211 9XX XXX XXX">
+          </div>
+          <div class="form-group">
+            <label>Email (optional)</label>
+            <input type="email" placeholder="you@email.com">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Department</label>
+            <select>
+              <option>General Consultation</option>
+              <option>Laboratory Services</option>
+              <option>Maternal &amp; Child Health</option>
+              <option>Vaccination</option>
+              <option>Internal Medicine</option>
+              <option>Paediatrics</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Preferred Doctor</label>
+            <select>
+              <option>No preference</option>
+              <option>Dr. James Akol</option>
+              <option>Dr. Grace Amara</option>
+              <option>Dr. Peter Lado</option>
+              <option>Dr. Mary Deng</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Preferred Date</label>
+            <input type="date">
+          </div>
+          <div class="form-group">
+            <label>Preferred Time</label>
+            <select>
+              <option>8:00 AM</option>
+              <option>9:00 AM</option>
+              <option>10:00 AM</option>
+              <option>11:00 AM</option>
+              <option>2:00 PM</option>
+              <option>3:00 PM</option>
+              <option>4:00 PM</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Reason for Visit</label>
+          <textarea placeholder="Briefly describe your symptoms or reason for the appointment…"></textarea>
+        </div>
+        <button class="btn btn-primary" style="width:100%; justify-content:center;">Confirm Appointment</button>
+      </div>
+
+      <div class="appt-info">
+        <span class="tag" style="color:var(--sage);">Opening Hours</span>
+        <h3 style="font-family:var(--ff-display); font-size:28px; margin:10px 0 16px;">When to find us</h3>
+        <p style="color:rgba(255,255,255,.7); margin-bottom:28px;">Walk-ins welcome. For non-emergency visits, booking ahead ensures you see the right doctor at the right time.</p>
+        <ul class="hours-list">
+          <li><span>Monday – Friday</span><span>8:00 AM – 6:00 PM</span></li>
+          <li class="today"><span>Saturday ← Today</span><span>8:00 AM – 2:00 PM</span></li>
+          <li><span>Sunday</span><span>9:00 AM – 1:00 PM</span></li>
+          <li><span>Emergency Unit</span><span>24 / 7 / 365</span></li>
+          <li><span>Pharmacy</span><span>8:00 AM – 8:00 PM</span></li>
+          <li><span>Laboratory</span><span>7:30 AM – 5:00 PM</span></li>
+        </ul>
+        <div style="margin-top:28px; padding:18px; background:rgba(255,255,255,.07); border-radius:var(--radius-lg); border:1px solid rgba(255,255,255,.1);">
+          <p style="font-size:13px; color:rgba(255,255,255,.65); margin:0 0 4px;">Check appointment status</p>
+          <div style="display:flex; gap:10px; margin-top:10px;">
+            <input type="text" placeholder="Enter booking ref. e.g. HFC-00234" style="flex:1; padding:10px 14px; border-radius:var(--radius); border:1.5px solid rgba(255,255,255,.2); background:rgba(255,255,255,.08); color:white; font-family:var(--ff-body); font-size:14px;">
+            <button class="btn btn-gold" style="white-space:nowrap;">Check</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PATIENT PORTAL ═══ -->
+<section class="section section--alt" id="portal">
+  <div class="container">
+    <div class="portal-inner">
+      <div>
+        <span class="tag">Patient Portal</span>
+        <h2 style="font-family:var(--ff-display); font-size:clamp(28px,4vw,40px); margin:10px 0 16px;">Your health records, always at hand</h2>
+        <p style="color:var(--slate); margin-bottom:32px;">Sign in to manage your care, view results, and communicate with your doctor — securely and privately.</p>
+        <ul class="portal-features">
+          <li>
+            <div class="pf-icon">📋</div>
+            <div class="pf-text">
+              <h4>Medical Records</h4>
+              <p>Access your full visit history, diagnoses, and treatment notes from any device.</p>
+            </div>
+          </li>
+          <li>
+            <div class="pf-icon">💊</div>
+            <div class="pf-text">
+              <h4>Prescriptions</h4>
+              <p>View current and past prescriptions, request refills, and check pharmacy collection status.</p>
+            </div>
+          </li>
+          <li>
+            <div class="pf-icon">🔬</div>
+            <div class="pf-text">
+              <h4>Lab Results</h4>
+              <p>Receive laboratory results as soon as they're ready — reviewed and annotated by your doctor.</p>
+            </div>
+          </li>
+          <li>
+            <div class="pf-icon">💬</div>
+            <div class="pf-text">
+              <h4>Secure Messaging</h4>
+              <p>Send non-urgent questions to your care team and receive responses within 24 hours.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="portal-login">
+        <h3>Sign in to your account</h3>
+        <div class="form-group">
+          <label>Patient ID or Phone Number</label>
+          <input type="text" placeholder="HFC-00001 or +211 9XX XXX XXX">
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" placeholder="••••••••">
+        </div>
+        <div style="display:flex; justify-content:flex-end; margin-bottom:18px;">
+          <a href="#portal" style="font-size:13px; color:var(--sage); text-decoration:none;">Forgot password?</a>
+        </div>
+        <button class="btn btn-gold" style="width:100%; justify-content:center; padding:13px;">Sign In</button>
+        <div class="portal-divider">— or —</div>
+        <a href="#portal" class="btn btn-outline" style="width:100%; justify-content:center; border-color:rgba(255,255,255,.2); color:rgba(255,255,255,.7);">Register as a new patient</a>
+        <p style="font-size:12px; color:rgba(255,255,255,.4); text-align:center; margin-top:16px;">Your data is encrypted and protected under South Sudan data privacy regulations.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ BLOG ═══ -->
+<section class="section" id="blog">
+  <div class="container">
+    <div class="section-head">
+      <span class="tag">Health Resources</span>
+      <h2>Knowledge that keeps you well</h2>
+      <p>Practical health guidance, disease awareness, and clinic updates written by our medical team.</p>
+    </div>
+    <div class="blog-grid">
+      <div class="blog-card">
+        <div class="blog-thumb t1">🧠</div>
+        <div class="blog-body">
+          <div class="blog-cat">Health Tips</div>
+          <h3>Five habits that protect your heart in South Sudan's heat</h3>
+          <p>Staying hydrated is only the first step. Our cardiologist explains dietary and lifestyle changes that make a real difference.</p>
+          <div class="blog-meta"><span>Dr. James Akol · 5 min read</span><a href="#blog">Read →</a></div>
+        </div>
+      </div>
+      <div class="blog-card">
+        <div class="blog-thumb t2">🦟</div>
+        <div class="blog-body">
+          <div class="blog-cat">Disease Awareness</div>
+          <h3>Malaria season: signs, prevention, and when to visit us</h3>
+          <p>Malaria remains the leading cause of hospitalisation in South Sudan. Dr. Deng outlines what every family needs to know.</p>
+          <div class="blog-meta"><span>Dr. Mary Deng · 7 min read</span><a href="#blog">Read →</a></div>
+        </div>
+      </div>
+      <div class="blog-card">
+        <div class="blog-thumb t3">🤰</div>
+        <div class="blog-body">
+          <div class="blog-cat">Maternal Health</div>
+          <h3>Antenatal visits: what to expect at each stage of pregnancy</h3>
+          <p>Regular check-ups save lives. Dr. Amara walks through the schedule and what happens at each appointment.</p>
+          <div class="blog-meta"><span>Dr. Grace Amara · 6 min read</span><a href="#blog">Read →</a></div>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top:36px;">
+      <a href="#blog" class="btn btn-outline">Browse all articles →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ GALLERY ═══ -->
+<section class="section section--alt" id="gallery">
+  <div class="container">
+    <div class="section-head">
+      <span class="tag">Our Facilities</span>
+      <h2>A clinic built for modern care</h2>
+      <p>Modern equipment, clean environments, and welcoming spaces designed with patient comfort in mind.</p>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item g1" style="font-size:72px;">🏥
+        <div class="gallery-overlay"><span>Main Reception</span></div>
+      </div>
+      <div class="gallery-item g2">🛏️
+        <div class="gallery-overlay"><span>In-Patient Ward</span></div>
+      </div>
+      <div class="gallery-item g3">🔬
+        <div class="gallery-overlay"><span>Laboratory</span></div>
+      </div>
+      <div class="gallery-item g4">💊
+        <div class="gallery-overlay"><span>Pharmacy</span></div>
+      </div>
+      <div class="gallery-item g5">🩻
+        <div class="gallery-overlay"><span>Imaging Suite</span></div>
+      </div>
+      <div class="gallery-item g6">🚑
+        <div class="gallery-overlay"><span>Emergency Unit</span></div>
+      </div>
+      <div class="gallery-item g7">🤱
+        <div class="gallery-overlay"><span>MCH Ward</span></div>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top:28px;">
+      <a href="#gallery" class="btn btn-outline">View full gallery →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CONTACT ═══ -->
+<section class="section" id="contact">
+  <div class="container">
+    <div class="section-head">
+      <span class="tag">Find Us</span>
+      <h2>We are here when you need us</h2>
+    </div>
+    <div class="contact-inner">
+      <div>
+        <div class="contact-info">
+          <div class="contact-item">
+            <div class="contact-icon">📍</div>
+            <div>
+              <h4>Address</h4>
+              <p>Hai Cinema Street, Opposite Unity Hotel<br>Juba, Central Equatoria, South Sudan</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">📞</div>
+            <div>
+              <h4>Phone Numbers</h4>
+              <p><a href="tel:+211912345678">+211 912 345 678</a> (Reception)<br>
+              <a href="tel:+211912345679">+211 912 345 679</a> (Appointments)<br>
+              <a href="tel:+211912345680">+211 912 345 680</a> (Lab Results)</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">✉️</div>
+            <div>
+              <h4>Email</h4>
+              <p><a href="mailto:info@healthfirstclinic.ss">info@healthfirstclinic.ss</a><br>
+              <a href="mailto:appointments@healthfirstclinic.ss">appointments@healthfirstclinic.ss</a></p>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:8px;">
+          <h4 style="font-size:14px; font-weight:700; margin-bottom:14px; color:var(--red-em);">🚨 Emergency Contacts</h4>
+          <div class="em-contacts">
+            <div class="em-card">
+              <h4>Emergency Line</h4>
+              <div class="em-num">911</div>
+            </div>
+            <div class="em-card">
+              <h4>Ambulance</h4>
+              <div class="em-num">+211 900</div>
+            </div>
+            <div class="em-card">
+              <h4>Night Duty</h4>
+              <div class="em-num">+211 920</div>
+            </div>
+            <div class="em-card">
+              <h4>WhatsApp</h4>
+              <div class="em-num">+211 912</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="map-placeholder">
+          🗺️
+          <p>Interactive map — Hai Cinema Street, Juba</p>
+          <a href="https://maps.google.com" target="_blank" class="btn btn-primary" style="font-size:13px; margin-top:4px;">Open in Google Maps</a>
+        </div>
+
+        <div style="background:var(--ivory); border-radius:var(--radius-lg); padding:24px;">
+          <h4 style="font-size:15px; font-weight:600; margin-bottom:16px;">Send us a message</h4>
+          <div class="form-group">
+            <label>Your Name</label>
+            <input type="text" placeholder="Full name">
+          </div>
+          <div class="form-group">
+            <label>Phone / Email</label>
+            <input type="text" placeholder="+211 or email address">
+          </div>
+          <div class="form-group">
+            <label>Message</label>
+            <textarea placeholder="How can we help you?"></textarea>
+          </div>
+          <button class="btn btn-primary" style="width:100%; justify-content:center;">Send Message</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CAREERS ═══ -->
+<section class="section section--alt" id="careers">
+  <div class="container">
+    <div class="section-head">
+      <span class="tag">Join Our Team</span>
+      <h2>Careers at HealthFirst</h2>
+    </div>
+    <div class="careers-intro">
+      <p style="color:var(--slate);">We are always looking for dedicated healthcare professionals and support staff who share our commitment to compassionate care. Join a team that is making a real difference in South Sudan's health landscape.</p>
+    </div>
+    <div class="jobs-list">
+      <div class="job-card">
+        <div class="job-icon">👨‍⚕️</div>
+        <div class="job-info">
+          <h3>General Practitioner (Locum)</h3>
+          <div class="job-meta">
+            <span>📍 Juba</span>
+            <span>🕐 Full-time / Part-time</span>
+            <span class="job-badge">Hiring</span>
+          </div>
+        </div>
+        <a href="#careers" class="btn btn-primary" style="font-size:13px; white-space:nowrap;">Apply Now</a>
+      </div>
+      <div class="job-card">
+        <div class="job-icon">🔬</div>
+        <div class="job-info">
+          <h3>Medical Laboratory Scientist</h3>
+          <div class="job-meta">
+            <span>📍 Juba</span>
+            <span>🕐 Full-time</span>
+            <span class="job-badge">Hiring</span>
+          </div>
+        </div>
+        <a href="#careers" class="btn btn-primary" style="font-size:13px; white-space:nowrap;">Apply Now</a>
+      </div>
+      <div class="job-card">
+        <div class="job-icon">💊</div>
+        <div class="job-info">
+          <h3>Registered Pharmacist</h3>
+          <div class="job-meta">
+            <span>📍 Juba</span>
+            <span>🕐 Full-time</span>
+            <span class="job-badge">Hiring</span>
+          </div>
+        </div>
+        <a href="#careers" class="btn btn-primary" style="font-size:13px; white-space:nowrap;">Apply Now</a>
+      </div>
+      <div class="job-card">
+        <div class="job-icon">🤱</div>
+        <div class="job-info">
+          <h3>Midwife / Nurse (MCH Unit)</h3>
+          <div class="job-meta">
+            <span>📍 Juba</span>
+            <span>🕐 Full-time</span>
+            <span class="job-badge">Hiring</span>
+          </div>
+        </div>
+        <a href="#careers" class="btn btn-primary" style="font-size:13px; white-space:nowrap;">Apply Now</a>
+      </div>
+      <div class="job-card">
+        <div class="job-icon">💻</div>
+        <div class="job-info">
+          <h3>Healthcare IT Support Officer</h3>
+          <div class="job-meta">
+            <span>📍 Juba</span>
+            <span>🕐 Full-time</span>
+            <span class="job-badge">Hiring</span>
+          </div>
+        </div>
+        <a href="#careers" class="btn btn-primary" style="font-size:13px; white-space:nowrap;">Apply Now</a>
+      </div>
+    </div>
+    <div style="margin-top:28px; text-align:center;">
+      <p style="color:var(--slate); font-size:14px; margin-bottom:12px;">Don't see your role? We accept open applications.</p>
+      <a href="mailto:careers@healthfirstclinic.ss" class="btn btn-outline">Send Open Application →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="footer-top">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#home" class="logo">
+            <div class="logo-mark">
+              <svg viewBox="0 0 24 24" style="width:20px;height:20px;fill:none;stroke:white;stroke-width:2.5;stroke-linecap:round;"><path d="M12 2L12 22M2 12L22 12"/></svg>
+            </div>
+            <span class="logo-text">Health<span style="color:var(--gold)">First</span></span>
+          </a>
+          <p>Delivering compassionate, expert healthcare to the people of South Sudan since 2012.</p>
+          <div class="footer-socials">
+            <a href="#" class="social-btn" title="Facebook">f</a>
+            <a href="#" class="social-btn" title="Twitter">𝕏</a>
+            <a href="#" class="social-btn" title="WhatsApp">💬</a>
+            <a href="#" class="social-btn" title="YouTube">▶</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="#services">General Consultation</a></li>
+            <li><a href="#services">Laboratory Services</a></li>
+            <li><a href="#services">Pharmacy</a></li>
+            <li><a href="#services">Maternal &amp; Child Health</a></li>
+            <li><a href="#services">Vaccination</a></li>
+            <li><a href="#services">Emergency Care</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#team">Our Doctors</a></li>
+            <li><a href="#appointments">Book Appointment</a></li>
+            <li><a href="#portal">Patient Portal</a></li>
+            <li><a href="#blog">Health Blog</a></li>
+            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="#careers">Careers</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <div class="footer-contact-item"><span>📍</span><span>Hai Cinema Street, Juba</span></div>
+          <div class="footer-contact-item"><span>📞</span><a href="tel:+211912345678" style="color:rgba(255,255,255,.6);">+211 912 345 678</a></div>
+          <div class="footer-contact-item"><span>✉</span><a href="mailto:info@healthfirstclinic.ss" style="color:rgba(255,255,255,.6);">info@healthfirstclinic.ss</a></div>
+          <div class="footer-contact-item" style="color: #ff8080; font-weight:600;"><span>🚨</span><a href="tel:911" style="color:#ff8080;">Emergency: 911</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="footer-bottom">
+      <span>© 2025 HealthFirst Clinic. All rights reserved.</span>
+      <div class="accred">
+        <span class="accred-badge">MOH Licensed</span>
+        <span class="accred-badge">WHO Standards</span>
+      </div>
+      <div class="footer-links">
+        <a href="#home">Privacy Policy</a>
+        <a href="#home">Terms of Use</a>
+        <a href="#home">Accessibility</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<button id="back-top" title="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+  // Hamburger
+  const ham = document.getElementById('hamburger');
+  const navLinks = document.getElementById('nav-links');
+  ham.addEventListener('click', () => navLinks.classList.toggle('open'));
+
+  // Active nav on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const links = document.querySelectorAll('.nav-links > li > a');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        links.forEach(l => l.classList.remove('active'));
+        const match = document.querySelector(`.nav-links > li > a[href="#${e.target.id}"]`);
+        if (match) match.classList.add('active');
+      }
+    });
+  }, { threshold: 0.35 });
+  sections.forEach(s => observer.observe(s));
+
+  // Back to top
+  const bt = document.getElementById('back-top');
+  window.addEventListener('scroll', () => bt.classList.toggle('visible', window.scrollY > 400));
+</script>
+</body>
+</html>
